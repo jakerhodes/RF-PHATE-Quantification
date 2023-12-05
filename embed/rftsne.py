@@ -1,0 +1,28 @@
+from sklearn import manifold
+from rfphate.rfgap import RFGAP
+from sklearn.preprocessing import MinMaxScaler
+import numpy as np
+
+
+def RFTSNE(data, y, prox_method = 'rfgap', random_state = None, perplexity=30, **kwargs):
+
+    prox_op = RFGAP(y = y, prox_method = prox_method, 
+                    random_state = random_state, **kwargs)
+    
+
+    prox_op.fit(data, y)
+
+    K = np.array(prox_op.get_proximities().todense())
+
+
+    scaler = MinMaxScaler()
+    K = scaler.fit_transform(K)
+
+
+    D = np.sqrt(1 - K)
+
+    return manifold.TSNE(n_components=2, perplexity=perplexity,
+                         metric = 'precomputed', init = 'random', 
+                         random_state = random_state, **kwargs).fit_transform(
+        D
+    )
