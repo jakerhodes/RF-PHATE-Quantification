@@ -1,3 +1,0 @@
-Need to install UMAP
-
-Make this something to be run in the terminal, eg., with argparse?
