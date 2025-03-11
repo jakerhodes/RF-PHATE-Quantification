@@ -7,7 +7,7 @@ from numpy.linalg import inv
 
 class My_kernel_supervised_PCA_UsingDual:
 
-    def __init__(self, n_components=None, kernel_on_labels=None, kernel=None):
+    def __init__(self, n_components=None, kernel_on_labels=None, kernel=None, random_state = None):
         self.n_components = n_components
         self.S = None
         self.V = None
@@ -109,7 +109,7 @@ class My_kernel_supervised_PCA_UsingDual:
         return the_matrix
     
 
-def KSPCA(data, y = None):
+def KSPCA(data, y = None, random_state = None):
     return np.transpose(My_kernel_supervised_PCA_UsingDual(n_components = 2, 
                                               kernel_on_labels = 'rbf',
-                                              kernel = 'rbf').fit_transform(np.transpose(data), np.transpose(y)))
+                                              kernel = 'rbf', random_state = random_state).fit_transform(np.transpose(data), np.transpose(y)))

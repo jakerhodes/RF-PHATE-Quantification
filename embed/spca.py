@@ -107,5 +107,5 @@ class My_supervised_PCA:
         return the_matrix
     
 
-def SPCA(data, y = None):
+def SPCA(data, y = None, random_state = None):
     return np.transpose(My_supervised_PCA(n_components = 2, kernel_on_labels = 'rbf').fit_transform(np.transpose(data), np.transpose(y)))

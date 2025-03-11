@@ -19,7 +19,7 @@ def DM(x, y = None, t=1, knn=5, decay=40, random_state = None):
     # symmetrize to remove numerical error
     diff_aff = (diff_aff + diff_aff.T) / 2
     # svd
-    U, S, _ = sparse.linalg.svds(diff_aff, k=3)
+    U, S, _ = sparse.linalg.svds(diff_aff, k=3, rng = random_state)
     # sort by smallest eigenvector
     s_idx = np.argsort(S)[::-1]
     U, S = U[:, s_idx], S[s_idx]
