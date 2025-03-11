@@ -6,6 +6,65 @@ import numpy as np
 from scipy.spatial import distance_matrix
 
 class ESLLE(BaseEstimator, TransformerMixin, ):
+
+    """
+    Enhanced Supervised Locally Linear Embedding (ESLLE) implementation.
+    
+    This class extends Locally Linear Embedding (LLE) by incorporating supervised information 
+    via a modified distance function that adjusts pairwise distances based on class labels.
+    
+    Parameters:
+    -----------
+    n_neighbors : int, default=5
+        Number of neighbors to consider for each point.
+    
+    n_components : int, default=2
+        Number of dimensions for the embedding.
+    
+    reg : float, default=1e-3
+        Regularization parameter for the weight matrix in LLE.
+    
+    eigen_solver : {"auto", "arpack", "dense"}, default="auto"
+        The eigenvalue decomposition strategy.
+    
+    tol : float, default=1e-6
+        Tolerance for convergence in eigenvalue decomposition.
+    
+    max_iter : int, default=100
+        Maximum number of iterations for the solver.
+    
+    method : {"standard", "hessian", "modified", "ltsa"}, default="standard"
+        LLE algorithm type.
+    
+    hessian_tol : float, default=1e-4
+        Tolerance parameter for Hessian LLE.
+    
+    modified_tol : float, default=1e-12
+        Tolerance parameter for Modified LLE.
+    
+    neighbors_algorithm : {"auto", "ball_tree", "kd_tree", "brute"}, default="auto"
+        Algorithm to use for nearest neighbor search.
+    
+    random_state : int, RandomState instance or None, default=None
+        Determines random number generation for eigen solver.
+    
+    n_jobs : int or None, default=None
+        Number of parallel jobs to run for nearest neighbor search.
+    
+    alpha : float, default=0.2
+        Parameter controlling the influence of class separation in the modified distance function.
+    
+    beta : float or None, default=None
+        Scaling factor for distance modification. If None, it is set to the mean pairwise distance.
+    
+    Methods:
+    --------
+    fit(X, y):
+        Fits the ESLLE model to the given data.
+    
+    fit_transform(X, y):
+        Fits the ESLLE model and returns the low-dimensional embedding.
+    """
     def __init__(self,
         *,
         n_neighbors=5,

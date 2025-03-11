@@ -12,6 +12,34 @@ from sklearn.utils.graph import _fix_connected_components
 import scipy
 
 class ESIsomap(Isomap):
+    """
+    Enhanced Supervised Isomap (ES-Isomap) for manifold learning with an adaptive distance metric.
+    
+    Parameters
+    ----------
+    n_neighbors : int, default=5
+        Number of neighbors to consider for constructing the neighborhood graph.
+    n_components : int, default=2
+        Number of dimensions for the embedding.
+    eigen_solver : str, {'auto', 'dense', 'arpack'}, default='auto'
+        The eigenvalue decomposition strategy.
+    tol : float, default=0
+        Tolerance for convergence in eigen solver.
+    max_iter : int, default=None
+        Maximum number of iterations for solver.
+    path_method : str, {'auto', 'FW', 'D'}, default='auto'
+        Method to compute shortest paths.
+    neighbors_algorithm : str, default='auto'
+        Algorithm for nearest neighbor search.
+    n_jobs : int, default=None
+        Number of parallel jobs.
+    p : int, default=2
+        Power parameter for the Minkowski metric.
+    sigma : float, default=1
+        Scaling factor for ES-Isomap distance adjustment.
+    d0 : float, default=0.5
+        Offset parameter for ES-Isomap distance adjustment.
+    """
 
     def __init__(
         self,
