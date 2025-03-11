@@ -29,7 +29,7 @@ def quantify_embeddings(data, method, labels = None, random_state = 42, **kwargs
     # Check to see of works with all models
     embedding = method(data, labels, random_state = random_state)
     
-    LGS = rfphate.low_dimensional_group_separation(embedding, labels)
+    LGS = rfphate.low_dimensional_group_separation(embedding, labels, random_state = random_state)
     LSP = rfphate.local_structure_preservation(data, labels, embedding, random_state = random_state, **kwargs)
     GSP = rfphate.global_structure_preservation(data, labels, embedding, random_state = random_state, **kwargs)
     model_diffs = rfphate.model_embedding_diff(data, labels, embedding, random_state = random_state, **kwargs)
@@ -41,7 +41,7 @@ def load_and_quantify(path, dataset, method, random_state):
 
     random.seed(random_state)
     x, y = load_parse_csv(path, dataset)
-    results = quantify_embeddings(x, method, y, n_repeats = 10)
+    results = quantify_embeddings(x, method, y, n_repeats = 5)
     n, d = x.shape
 
     return {'iter': random_state, 'dataset': dataset,
@@ -62,8 +62,9 @@ if __name__ == '__main__':
     supervised_methods   = embed.supervised_methods
     rf_methods           = embed.rf_methods
 
-    all_methods = rf_methods[0:1]
+    all_methods = supervised_methods
 
+    # TODO: Test other methods; stick with Iris for initial test
     # all_methods = unsupervised_methods + supervised_methods + rf_methods
 
     # datasets = ['audiology', 'balance_scale', 'breast_cancer', 'car', 'chess', 'crx',
