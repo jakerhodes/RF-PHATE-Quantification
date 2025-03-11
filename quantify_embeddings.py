@@ -1,15 +1,3 @@
-# Suppress warnings #
-import warnings
-import sys
-
-warnings.simplefilter("ignore")
-warnings.simplefilter("ignore", category=FutureWarning)
-
-# Ensure all warnings are ignored in case they are reset
-if hasattr(sys, "warnoptions"):
-    sys.warnoptions[:] = []
-#####################
-
 import pandas as pd
 from joblib import Parallel, delayed
 
@@ -62,19 +50,13 @@ if __name__ == '__main__':
     supervised_methods   = embed.supervised_methods
     rf_methods           = embed.rf_methods
 
-    all_methods = supervised_methods
+    all_methods = unsupervised_methods + supervised_methods + rf_methods
 
-    # TODO: Test other methods; stick with Iris for initial test
-    # all_methods = unsupervised_methods + supervised_methods + rf_methods
-
-    # datasets = ['audiology', 'balance_scale', 'breast_cancer', 'car', 'chess', 'crx',
-    #             'diabetes', 'ecoli_5', 'flare1', 'glass', 'heart_disease',
-    #             'heart_failure', 'hepatitis', 'ionosphere', 'iris', 'lymphography',
-    #             'optdigits', 'parkinsons', 'seeds', 'segmentation', 'tic-tac-toe',
-    #             'titanic', 'artificial_tree', 'waveform', 'wine', 'zoo']
-
-
-    datasets = ['iris']
+    datasets = ['audiology', 'balance_scale', 'breast_cancer', 'car', 'chess', 'crx',
+                'diabetes', 'ecoli_5', 'flare1', 'glass', 'heart_disease',
+                'heart_failure', 'hepatitis', 'ionosphere', 'iris', 'lymphography',
+                'optdigits', 'parkinsons', 'seeds', 'segmentation', 'tic-tac-toe',
+                'titanic', 'artificial_tree', 'waveform', 'wine', 'zoo']
 
     # Pre-defined random states and call these in the main function
     random_states = [9923, 17654, 3456, 11234, 789, 15678,
@@ -88,8 +70,7 @@ if __name__ == '__main__':
 
         print(dataset_name)
 
-        results = Parallel(n_jobs = -2)(delayed(load_and_quantify)('data/', dataset_name, method, random_states[i]) for i in range(2) for method in all_methods)
-        # results = Parallel(n_jobs = -2)(delayed(load_and_quantify)('data/', dataset_name, method, random_states[i]) for i in range(n_random_states) for method in all_methods)
+        results = Parallel(n_jobs = -2)(delayed(load_and_quantify)('data/', dataset_name, method, random_states[i]) for i in range(n_random_states) for method in all_methods)
         results_df = pd.DataFrame(results)
         agg_results = results_df.groupby(['dataset', 'method'])[['LGS', 'LSP', 'GSP', 'knndiff', 'rfdiff', 'knn_scores_x', 'rf_scores_x', 'knn_scores_emb', 'rf_scores_emb']].agg(['mean', 'std'])
         agg_results.to_csv('results/' + dataset_name + '.csv')
