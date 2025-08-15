@@ -24,6 +24,9 @@ from .slapeig import SLAPEIG
 from .spca import SPCA
 from .kspca import KSPCA
 from .cebra import CEBRA
+from .sae import SAE
+from .ssnp import SSNP
+from .ce import CE
 
 
 # RF-Based
@@ -62,7 +65,10 @@ supervised_methods = [
     PLSDA,
     SPCA,
     KSPCA,
-    CEBRA
+    CEBRA,
+    SAE,
+    SSNP,
+    CE
 ]
 
 rf_methods = [
