@@ -2,11 +2,11 @@ import os
 import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader, random_split
-from src.utils.numpy_dataset import FromNumpyDataset
-from src.models.base_model import BaseModel
-from src.models.torch_models import AETorchModule, EarlyStopping
+from methods.utils.numpy_dataset import FromNumpyDataset
+from methods.base_model import BaseModel
+from methods.torch_models import AETorchModule, EarlyStopping
 import numpy as np
-import wandb
+# import wandb
 import logging
 
 class CE(BaseModel):
@@ -15,19 +15,19 @@ class CE(BaseModel):
     """
 
     def __init__(self,
-                 n_components,
-                 lr,
-                 batch_size,
-                 weight_decay,
-                 random_state,
-                 device,
-                 dropout_prob,
-                 epochs,
-                 hidden_dims,
-                 early_stopping,
-                 patience,
-                 delta_factor,
-                 save_model
+                 n_components=2,
+                 lr=1e-3,
+                 batch_size=512,
+                 weight_decay=1e-5,
+                 random_state=None,
+                 device=None,
+                 dropout_prob=0.0,
+                 epochs=200,
+                 hidden_dims=[800, 400, 100],
+                 early_stopping=False,
+                 patience=50,
+                 delta_factor=1e-3,
+                 save_model=False
                  ):
 
         self.n_components = n_components
@@ -134,7 +134,7 @@ class CE(BaseModel):
                 optimizer.step()
 
             self.epoch_losses_recon.append(running_recon_loss / len(train_loader))
-            wandb.log({f"{self.random_state}: train_recon_loss": self.epoch_losses_recon[-1], "Epoch": epoch})
+            # wandb.log({f"{self.random_state}: train_recon_loss": self.epoch_losses_recon[-1], "Epoch": epoch})
 
             if epoch % 50 == 0:
                 logging.info(f"Epoch {epoch}/{self.epochs}, Recon Loss: {self.epoch_losses_recon[-1]:.7f}") 

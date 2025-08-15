@@ -2,10 +2,10 @@ import os
 import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
-from src.models.base_model import BaseModel
-from src.models.torch_models import AETorchModule, EarlyStopping
+from methods.base_model import BaseModel
+from methods.torch_models import AETorchModule, EarlyStopping
 import numpy as np
-import wandb
+# import wandb
 import logging
 
 
@@ -27,19 +27,19 @@ class SSNP(BaseModel):
     """
 
     def __init__(self,
-                 n_components,
-                 lr,
-                 batch_size,
-                 weight_decay,
-                 random_state,
-                 device,
-                 dropout_prob,
-                 epochs,
-                 hidden_dims,
-                 early_stopping,
-                 patience,
-                 delta_factor,
-                 save_model):
+                 n_components=2,
+                 lr=1e-3,
+                 batch_size=512,
+                 weight_decay=1e-5,
+                 random_state=None,
+                 device='cpu',
+                 dropout_prob=0.0,
+                 epochs=200,
+                 hidden_dims=[800,400,100],
+                 early_stopping=False,
+                 patience=200,
+                 delta_factor=1e-4,
+                 save_model=False):
         self.n_components = n_components
         self.lr = lr
         self.batch_size = batch_size
@@ -111,6 +111,9 @@ class SSNP(BaseModel):
         best_loss = float("inf")
         counter = 0
 
+        # if not wandb.run:
+        #     wandb.init(project="RF-PHATE-Quantification", reinit=True)
+
         for epoch in range(epochs):
             model.train().to(device)
             running_loss = 0
@@ -126,7 +129,7 @@ class SSNP(BaseModel):
 
             avg_loss = running_loss / len(train_loader)
             self.epoch_losses.append(avg_loss)
-            wandb.log({f"{self.random_state}: train_loss": avg_loss, "Epoch": epoch})
+            # wandb.log({f"{self.random_state}: train_loss": avg_loss, "Epoch": epoch})
 
             if epoch % 50 == 0:
                 logging.info(f"Epoch {epoch}/{self.epochs}, Loss: {avg_loss:.7f}")
