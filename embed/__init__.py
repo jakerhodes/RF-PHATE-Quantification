@@ -24,7 +24,7 @@ from .slapeig import SLAPEIG
 from .spca import SPCA
 from .kspca import KSPCA
 from .cebra import CEBRA
-from .sae import SAE
+# from .sae import SAE
 from .ssnp import SSNP
 from .ce import CE
 
@@ -66,7 +66,7 @@ supervised_methods = [
     SPCA,
     KSPCA,
     CEBRA,
-    SAE,
+    # SAE,
     SSNP,
     CE
 ]
