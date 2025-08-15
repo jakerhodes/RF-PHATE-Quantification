@@ -3,3 +3,4 @@ rfphate @ git+https://github.com/jakerhodes/RF-PHATE
 umap-learn
 cebra
 pandas==2.1
+wandb
