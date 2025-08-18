@@ -54,9 +54,9 @@ if __name__ == '__main__':
 
     datasets = ['audiology', 'balance_scale', 'breast_cancer', 'car', 'chess', 'crx',
                 'diabetes', 'ecoli_5', 'flare1', 'glass', 'heart_disease',
-                'heart_failure', 'hepatitis', 'ionosphere', 'iris', 'lymphography',
+                'heart_failure', 'hepatitis', 'hill_valley', 'ionosphere', 'iris', 'lymphography',
                 'optdigits', 'parkinsons', 'seeds', 'segmentation', 'tic-tac-toe',
-                'titanic', 'artificial_tree', 'waveform', 'wine', 'zoo']
+                'titanic', 'treeData', 'artificial_tree', 'waveform', 'wine', 'zoo']
 
     # Pre-defined random states and call these in the main function
     random_states = [9923, 17654, 3456, 11234, 789, 15678,
