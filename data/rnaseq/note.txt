@@ -1,0 +1,3 @@
+The rnaSeq data used her is too large to store in this repository. The original data source can be found here.
+
+https://archive.ics.uci.edu/dataset/401/gene+expression+cancer+rna+seq

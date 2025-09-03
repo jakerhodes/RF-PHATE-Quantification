@@ -1,0 +1,4 @@
+# The files are too large to store on GitHub. They can be reproduced using splatter-data.R
+
+*.mtx
+*.txt
